@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.customCardContainer {
+  padding-bottom: 50%;
+  width: 70%; /* Definindo a largura dos cards em relação à largura do contêiner pai */
+  margin: auto; 
+  position: relative;
+  overflow: hidden;
+}
+
+.customCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.customTitle {
+  font-family: "Archivo", sans-serif;
+
+  color: #333;
+}
+
+.customText {
+  color: #666;
+}
+
+.customButtonS {
+  font-family: "Archivo", sans-serif;
+  margin-top: 40px;
+  background-color: #ff69b4; 
+  border-color: #ff69b4;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px; 
+  font-weight: bold; 
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; 
+}
+
+.customButtonT {
+  font-family: "Archivo", sans-serif;
+  margin-top: 40px;
+  background-color: #0c187e; 
+  border: 0;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px; 
+  font-weight: bold; 
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; 
+}
+
+.customButtonC {
+  font-family: "Archivo", sans-serif;
+  margin-top: 40px;
+  background-color: #b915e2; 
+  border-color: #f090f0;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px; 
+  font-weight: bold; 
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; 
+}
+
+.customButtonB {
+  font-family: "Archivo", sans-serif;
+  margin-top: 40px;
+  background-color: #05131b;
+  border: 0;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px; 
+  font-weight: bold; 
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; 
+}

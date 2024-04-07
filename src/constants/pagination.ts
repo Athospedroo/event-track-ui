@@ -1,0 +1,5 @@
+const DEFAULT_ITEMS_PER_PAGE = 10
+
+export { 
+    DEFAULT_ITEMS_PER_PAGE
+}
