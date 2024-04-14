@@ -61,8 +61,8 @@ export function LoginPageView() {
     if (!userExists) {
       console.log('apartai vos de mim pois não vos conheço')
     }
-
   }
+
   return (
     <>
       <section className={`${styles.backgroundRadialGradient} overflow-hidden`}>
