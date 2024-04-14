@@ -25,7 +25,7 @@ export function LoginPageView() {
       {
         userID: "964f68c9-fc74-4ac5-8e13-12e878a35965",
         name: "Ester Victória",
-        email: "ester.vict@gmail.com",
+        email: "estervictoria.oliveira@gmail.com",
         password: "**asEst2346@#",
       }
     ]
@@ -37,30 +37,6 @@ export function LoginPageView() {
     }
     
     console.log('apartai vos de mim pois não vos conheço')
-  }
-
-  async function handleOnClickRedirect() {
-
-    const users = [
-      {
-        userID: "0fb2a877-1503-4547-8428-76c1350c113c",
-        name: "Atos Pedro",
-        email: "athos.pedro17@gmail.com",
-        password: "ap@gcjt2024t",
-      },
-      {
-        userID: "964f68c9-fc74-4ac5-8e13-12e878a35965",
-        name: "Ester Victória",
-        email: "ester.vict@gmail.com",
-        password: "**asEst2346@#",
-      }
-    ]
-
-    const userExists = users.some((u) => u.email === userLoginName && u.password === userPassword)
-
-    if (!userExists) {
-      console.log('apartai vos de mim pois não vos conheço')
-    }
   }
 
   return (

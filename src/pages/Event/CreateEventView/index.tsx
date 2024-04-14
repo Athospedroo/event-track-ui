@@ -20,10 +20,10 @@ export default function CreateEventView() {
       name: 'SOPRANO',
       ID: 2
     }, {
-      name: 'CONTRALTO',
+      name: 'BAIXO',
       ID: 3
     }, {
-      name: 'BAIXO',
+      name: 'CONTRALTO',
       ID: 4
     },
   ]
