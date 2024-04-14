@@ -10,7 +10,7 @@ class EventTrackApiGraphQLRequest {
     try {
       const response = await axios({
         method: 'POST',
-        url: `http://localhost:8079/graphql`,
+        url: `http://64.23.210.3:8079/graphql`,
         timeout: options?.timeout || REQUEST_TIMEOUT,
         httpsAgent: options?.httpsAgent || HTTPS_AGENT,
         data: {
