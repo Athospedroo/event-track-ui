@@ -86,7 +86,7 @@ export function NavBarView() {
             aria-expanded="false"
           >
             <img
-              src={'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'}
+              src={user?.imageUrl ? user.imageUrl : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'}
               className="rounded-circle"
               height="25"
               alt=""
