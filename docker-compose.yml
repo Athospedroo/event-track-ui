@@ -1,6 +1,6 @@
 version: '3'
 services:
-  pa-panel-ui:
+  event-track-ui:
     image: event-track-ui:${VERSION}
     build:
       context: .
