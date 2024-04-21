@@ -16,6 +16,7 @@ function SuccessComponent(props: successProps) {
     return () => {
       clearTimeout(timer)
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.clearMessage]);
   return (
     <div>

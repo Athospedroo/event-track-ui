@@ -16,6 +16,7 @@ function ErrorComponent(props: errorProps) {
     return () => {
       clearTimeout(timer)
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.clearError]);
   return (  
     <div>

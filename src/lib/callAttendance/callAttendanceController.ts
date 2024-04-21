@@ -54,25 +54,25 @@ class CallAttendanceController {
   async listUserCallAttendanceController(req: listUserCallAttendanceRequestType): Promise<listUserCallAttendanceResponseType> {
     const props = {
       query: `
-      query ($voiceType: Int) {
-        usersCallAttendance(voiceType: $voiceType) {
+      query ($voiceType: Int, $eventID: Int) {
+        usersCallAttendance(voiceType: $voiceType, eventID: $eventID) {
           usersCallAttendance {
             ID
             name
             email
             voiceType
             memberCard
+            badgeNumber
             churchName
             areaNumber
             isActive
             isDeleted
             presence
             badgeChecked
-            badgeNumber
             phone
             shirtSize
-            userDateBirth
             userType
+            userDateBirth
           }
           error {
             code

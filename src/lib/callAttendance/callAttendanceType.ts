@@ -40,6 +40,7 @@ type UserCallAttendancetype = {
 
 type listUserCallAttendanceRequestType = {
   voiceType: number
+  eventID: number | undefined
 }
 
 type listUserCallAttendanceResponseType = {

@@ -4,7 +4,7 @@ import { EventEmitterLocal } from "../../../../core/event"
 import { ModalAction } from "../../../../core/modal"
 import { ModalFullScreen } from "@/components/modal/ModalFullScreen"
 import { voiceTypeToString } from "@/common/voiceTypeToString"
-
+import Form from 'react-bootstrap/Form';
 interface UserDetailsAndRecordsViewModalProps {
   eventLocal: EventEmitterLocal
   handleAddRegisterInCallAttendance: Function
@@ -14,11 +14,12 @@ export default function UserDetailsAndRecordsViewModal(props: UserDetailsAndReco
   const [userCallAttendance, setUserCallAttendance] = useState<UserCallAttendancetype>()
   const [isActive, setIsActive] = useState(true)
   const [ID, setID] = useState<string>()
-  
+
   const MODAL_ID = 'userDetailsAndRecordsModalView'
 
   useEffect(() => {
     init()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function init() {
@@ -52,7 +53,7 @@ export default function UserDetailsAndRecordsViewModal(props: UserDetailsAndReco
   function handleOnClickAddUserInCallAttendance(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     evt.preventDefault()
     const badgeChecked = isActive ? 1 : 2
-    const values = { ID, badgeChecked}
+    const values = { ID, badgeChecked }
     props.handleAddRegisterInCallAttendance(values)
   }
 
@@ -145,14 +146,23 @@ export default function UserDetailsAndRecordsViewModal(props: UserDetailsAndReco
                   </div>
                   <div style={item}>
                     <label className="fw-bold" style={{ display: 'block' }}>Crachá</label>
-                    <input
+                    <Form>
+                      <Form.Check // prettier-ignore
+                        type="switch"
+                        id="custom-switch"
+                        // label="Check this switch"
+                        checked={isActive}
+                        onChange={handleBadgeOnChange}
+                      />
+                    </Form>
+                    {/* <input
                       type="checkbox"
                       className="form-check-input cursor-pointer"
                       name=""
                       id=""
                       checked={isActive}
                       onChange={handleBadgeOnChange}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

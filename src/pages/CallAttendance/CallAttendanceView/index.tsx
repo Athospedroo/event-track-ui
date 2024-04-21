@@ -4,7 +4,7 @@ import { UserCallAttendancetype, listUserCallAttendanceRequestType, registerUser
 import { callAttendanceController } from "../../../lib/callAttendance/callAttendanceController"
 import { CallAttendanceViewEvent } from "../../../lib/callAttendance/callAttendanceViewEvent"
 import { EventEmitterLocal } from "../../../core/event"
-import { NotificationAction } from "@/components/Notification/Notification"
+// import { NotificationAction } from "@/components/Notification/Notification"
 import { ErrorComponent } from "@/components/ErrorComponent"
 import { SuccessComponent } from "@/components/SuccessComponent"
 import { useRouter } from "next/router"
@@ -32,11 +32,13 @@ export default function CallAttendanceView() {
       setVoicetype(Number(router.query.voiceType))
       fetchUsersCallAttendance(Number(router.query.voiceType))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   async function fetchUsersCallAttendance(voiceType: number) {
     const req: listUserCallAttendanceRequestType = {
-      voiceType
+      voiceType,
+      eventID
     }
 
     const { errors, usersCallAttendance } = await callAttendanceController.listUserCallAttendanceController(req)
@@ -118,6 +120,7 @@ export default function CallAttendanceView() {
         setIsError(errors)
       }
       setMessageSuccess("evento concluído com sucesso!!")
+      handleOnClickBack()
     } catch (error) {
       console.log(error)
     }

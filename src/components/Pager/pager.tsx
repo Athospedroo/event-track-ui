@@ -35,6 +35,7 @@ function Pager({ itemsCount, handleChangePage, validatePage, interval = 10, filt
       currentPage.current = 0
       handleChangePage(currentPage.current)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleSelectPage(new_page: number) {  
