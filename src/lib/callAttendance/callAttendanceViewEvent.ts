@@ -8,8 +8,16 @@ class CallAttendanceViewEvent {
   static closeUserDetailsAndRecordsModalView(eventLocal: EventEmitterLocal, data: any) {
     eventLocal.dispatch('userDetailsAndRecordsModalView:closeModal', data)
   }
-}
 
+  static openUserCallAttendanceViewModal(eventLocal: EventEmitterLocal, data: any) {
+    eventLocal.dispatch('userCallAttendanceViewModal:openModal', data)
+  }
+
+  static closeUserCallAttendanceViewModal(eventLocal: EventEmitterLocal, data: any) {
+    eventLocal.dispatch('userCallAttendanceViewModal:closeModal', data)
+  }
+}
+//UserCallAttendanceViewModal
 export {
   CallAttendanceViewEvent
 }

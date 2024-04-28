@@ -22,12 +22,12 @@ export default function EventView() {
     const { errors, events } = response
 
     if (errors && errors.length > 0) {
-    } else {
-      if (events) {
-        setEvents(events)
-      }
+      console.log(errors)
+    } 
+    
+    if (events) {
+      setEvents(events)
     }
-
   }
 
   async function handleOnClickInitEvent(e: React.MouseEvent<HTMLButtonElement>, eventID: number, voiceType: number) {
@@ -50,6 +50,7 @@ export default function EventView() {
   }
 
   function handleOnClickRedirect(e: React.MouseEvent<HTMLButtonElement>, eventID: number, voiceType: number) {
+    console.log('eventId', eventID)
     e.preventDefault()
     router.push({
       pathname: '/CallAttendance/CallAttendanceView',
@@ -75,7 +76,7 @@ export default function EventView() {
     // <LayoutView>
     // </LayoutView>
 
-    <div className="container-fluid py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
+    <div className="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
       <section>
         <div className="row align-items-center">
           <div className="col">

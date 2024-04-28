@@ -11,6 +11,8 @@ import { useRouter } from "next/router"
 import { eventViewController } from "@/lib/event/EventViewController"
 import ListUsersCallAttendance from "./components/ListUserCallAttendance"
 import UserDetailsAndRecordsViewModal from "./components/UserDetailsAndRecordsViewModal"
+import UserCallAttendanceViewModal from "./components/UserCallAttendanceViewModal"
+import { NotificationAction } from "@/components/Notification/Notification"
 
 export default function CallAttendanceView() {
   const [eventLocal] = useState(new EventEmitterLocal())
@@ -30,12 +32,12 @@ export default function CallAttendanceView() {
     if (router.query.eventID && router.query.voiceType) {
       setEventID(Number(router.query.eventID))
       setVoicetype(Number(router.query.voiceType))
-      fetchUsersCallAttendance(Number(router.query.voiceType))
+      fetchUsersCallAttendance(Number(router.query.voiceType), Number(router.query.eventID))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  async function fetchUsersCallAttendance(voiceType: number) {
+  async function fetchUsersCallAttendance(voiceType: number, eventID: number) {
     const req: listUserCallAttendanceRequestType = {
       voiceType,
       eventID
@@ -60,6 +62,13 @@ export default function CallAttendanceView() {
     CallAttendanceViewEvent.openUserDetailsAndRecordsModalView(eventLocal, response?.user)
   }
 
+  async function handleOnClickOpenModalUserCallAtendance(e: React.MouseEvent<HTMLButtonElement>, userID: string) {
+    e.preventDefault()
+    const response = await callAttendanceController.getUser(userID)
+    console.log('aloalaoaoalao', response.user)
+    CallAttendanceViewEvent.openUserCallAttendanceViewModal(eventLocal, response?.user)
+  }
+
   async function handleAddRegisterInCallAttendance(values: any) {
     const { ID, badgeChecked } = values
     const registerPresenceRequest: registerUserCallAttendanceRequestType = {
@@ -78,8 +87,9 @@ export default function CallAttendanceView() {
       setIsError(errors)
     } else {
       CallAttendanceViewEvent.closeUserDetailsAndRecordsModalView(eventLocal, null)
-      setMessageSuccess('Presença adicionada com sucesso!')
-      await fetchUsersCallAttendance(voiceType as number)
+      // setMessageSuccess('Presença adicionada com sucesso!')
+      NotificationAction.notifySuccess(`Presença adicionada com sucesso!`)
+      await fetchUsersCallAttendance(voiceType as number, eventID as number)
     }
   }
 
@@ -126,6 +136,21 @@ export default function CallAttendanceView() {
     }
   }
 
+  function obterDataEmPortugues() {
+    const diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+    const mesesDoAno = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  
+    const dataAtual = new Date();
+    const diaSemana = diasDaSemana[dataAtual.getDay()];
+    const dia = dataAtual.getDate();
+    const mes = mesesDoAno[dataAtual.getMonth()];
+    const ano = dataAtual.getFullYear();
+  
+    const dataFormatada = `${diaSemana}, ${dia} de ${mes} de ${ano}`;
+  
+    return dataFormatada;
+  }
+
   return (
     <div className="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
       <section>
@@ -133,7 +158,7 @@ export default function CallAttendanceView() {
           <div className="col">
             <h4 className="h4">{voiceTypeToString(voiceType as number)}</h4>
             <div className="d-flex mt-3">
-              <span className="date">{new Date().toDateString()}</span>
+              <span className="date">{obterDataEmPortugues()}</span>
 
             </div>
           </div>
@@ -155,11 +180,11 @@ export default function CallAttendanceView() {
           <div className="row">
             <div className="col-12">
               <div className="d-flex mt-3">
-                <div className="input-group mb-3">
+                <div className="input-group mb-3 py-1">
                   <input type="text"
-                    className="form-control rounded-pill"
-                    placeholder="digite o número do crachá"
-                    aria-label="digite o número do crachá"
+                    className="form-control rounded-pill py-2"
+                    placeholder="Digite o número do crachá :)"
+                    aria-label="Digite o número do crachá :)"
                     aria-describedby="button-addon2"
                     value={searchUserNumber ? searchUserNumber : ''}
                     onChange={handleSearchUser}
@@ -171,19 +196,6 @@ export default function CallAttendanceView() {
                 </div>
               </div>
             </div>
-            {
-              isError.length > 0 ? (<div>
-                <ErrorComponent errors={isError} clearError={clearError} />
-              </div>) : ''
-            }
-            {
-              messageSuccess ? (<div>
-                <SuccessComponent
-                  message={messageSuccess}
-                  clearMessage={clearMessage}
-                />
-              </div>) : ''
-            }
           </div>
         </div>
 
@@ -192,6 +204,7 @@ export default function CallAttendanceView() {
             <ListUsersCallAttendance
               handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
               handleOnClickOpenModal={handleOnClickOpenModal}
+              handleOnClickOpenModalUserCallAtendance={handleOnClickOpenModalUserCallAtendance}
               usersCallAttendance={usersCallAttendance}
               searchUser={searchUser}
               cleanInputSearch={cleanInputSearchUser}
@@ -207,6 +220,10 @@ export default function CallAttendanceView() {
         </div>
       </section>
       <UserDetailsAndRecordsViewModal
+        eventLocal={eventLocal}
+        handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
+      />
+      <UserCallAttendanceViewModal
         eventLocal={eventLocal}
         handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
       />

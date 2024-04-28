@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 import { createEventRequestType } from "../../../lib/event/createEventViewType"
 import { createEventController } from "../../../lib/event/createEventViewController"
+import { NotificationAction } from "@/components/Notification/Notification"
 
 export default function CreateEventView() {
   const [name, setName] = useState<string>('')
@@ -44,9 +45,11 @@ export default function CreateEventView() {
     const response = await createEventController.createEvent(req)
 
     if (response.errors && response.errors.length > 0) {
+      NotificationAction.notifyAllErrors(response.errors)
       console.log('Deu ruim', response.errors)
     } else {  
-      setAlert('Evento Criado com sucesso')
+      // setAlert('Evento Criado com sucesso')
+      NotificationAction.notifySuccess('Evento Criado com sucesso')
       router.push({ pathname: '/Event/EventView'})
     }
 

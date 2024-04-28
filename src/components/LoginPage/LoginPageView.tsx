@@ -3,6 +3,7 @@ import styles from './LoginPage.module.css'
 import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '@/context/AuthContext'
+import { NotificationAction } from '../Notification/Notification'
 
 
 export function LoginPageView() {
@@ -25,18 +26,20 @@ export function LoginPageView() {
       {
         userID: "964f68c9-fc74-4ac5-8e13-12e878a35965",
         name: "Ester Victória",
-        email: "estervictoria.oliveira@gmail.com",
-        password: "**asEst2346@#",
+        email: "estervictoria@gmail.com",
+        password: "estvic@2024",
       }
     ]
 
     const userExists = users.some((u) => u.email === userLoginName && u.password === userPassword)
+    const username = users.find((u) => u.email === userLoginName && u.password === userPassword)
 
     if (userExists) {
-      await signIn(data)
+      NotificationAction.notifySuccess(`Login efetuado com sucesso, bem vindo (a) ${username?.name} :) `)
+     return await signIn(data)
     }
-    
-    console.log('apartai vos de mim pois não vos conheço')
+    NotificationAction.notifyError('apartai-vos de mim pois não vos conheço')
+    console.log('apartai vos de mim pois não vos conheço!')
   }
 
   return (

@@ -1,4 +1,5 @@
 // /* eslint-disable */
+// "use client";
 // import React, { useState } from 'react';
 // import ReactApexChart from 'react-apexcharts';
 
@@ -52,15 +53,23 @@
 //           }
 //         }
 //       }
-//     },    
+//     },
 //   });
 
 //   return (
 //     <div>
-//       <div id="chart">
-//         <ReactApexChart options={chartData.options} series={chartData.series} type="bar" height={350} />
-//       </div>
-//       <div id="html-dist"></div>
+//       {
+//         (typeof window !== 'undefined') &&
+//         (
+//           <>
+//             <div id="chart">
+//               <ReactApexChart options={chartData.options} series={chartData.series} type="bar" height={350} />
+//             </div>
+//             <div id="html-dist"></div>
+
+//           </>
+//         )
+//       }
 //     </div>
 //   );
 // }

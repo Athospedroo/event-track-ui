@@ -1,4 +1,5 @@
 import { NavBarView } from "../NavBar/NavBarView";
+import { NotificationWidget } from "../Notification/NotificationWidget";
 
 export default function LayoutView({ children }: any) {
 
@@ -6,6 +7,7 @@ export default function LayoutView({ children }: any) {
     <div>
       <NavBarView key={'#navVieww'}/>
       <main>{children}</main>
+      <NotificationWidget/>
     </div>
   )
 }

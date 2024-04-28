@@ -1,4 +1,5 @@
 // /* eslint-disable */
+// "use client";
 // import React, { useState } from 'react';
 // import ReactApexChart from 'react-apexcharts';
 
@@ -10,7 +11,7 @@
 //         width: 380,
 //         type: 'pie' as 'pie', // Definindo o tipo explicitamente como 'pie'
 //       },
-//       labels: ['Soprano', 'Tenor', 'Contralto', 'Baixo', ],
+//       labels: ['Soprano', 'Tenor', 'Contralto', 'Baixo',],
 //       dataLabels: {
 //         formatter: function (val: any, opts: any) {
 //           return val.toFixed(0)
@@ -27,15 +28,24 @@
 //           }
 //         }
 //       }]
-//     },    
+//     },
 //   });
 
 //   return (
 //     <div>
-//       <div id="chart">
-//         <ReactApexChart options={chartData.options} series={chartData.series} type="pie" width={380} />
-//       </div>
-//       <div id="html-dist"></div>
+
+//       {
+//         (typeof window !== 'undefined') &&
+
+//         (<>
+
+//           <div id="chart">
+//             <ReactApexChart options={chartData.options} series={chartData.series} type="pie" width={380} />
+//           </div>
+//           <div id="html-dist"></div>
+
+//         </>)
+//       }
 //     </div>
 //   );
 // }

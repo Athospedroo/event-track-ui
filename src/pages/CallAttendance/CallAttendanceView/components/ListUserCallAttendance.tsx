@@ -3,12 +3,13 @@ import { UserCallAttendancetype } from "../../../../lib/callAttendance/callAtten
 interface ListUserCallAttendanceProps {
   usersCallAttendance: UserCallAttendancetype[]
   handleOnClickOpenModal: (e: React.MouseEvent<HTMLButtonElement>, userID: string) => void
+  handleOnClickOpenModalUserCallAtendance: (e: React.MouseEvent<HTMLButtonElement>, userID: string) => void
   searchUser: UserCallAttendancetype | null | undefined
   handleAddRegisterInCallAttendance: Function
   cleanInputSearch: Function
 }
 
-export default function ListUsersCallAttendance({ usersCallAttendance, handleOnClickOpenModal, searchUser, handleAddRegisterInCallAttendance, cleanInputSearch }: ListUserCallAttendanceProps) {
+export default function ListUsersCallAttendance({ usersCallAttendance, handleOnClickOpenModal, searchUser, handleAddRegisterInCallAttendance, cleanInputSearch, handleOnClickOpenModalUserCallAtendance }: ListUserCallAttendanceProps) {
   function handleOnClickAddUserInCallAttendance(e: React.MouseEvent<HTMLButtonElement>, userID: string) {
     e.preventDefault()
     const badgeChecked = 1
@@ -44,7 +45,7 @@ export default function ListUsersCallAttendance({ usersCallAttendance, handleOnC
                 </td>
                 <td className="p-0 border-0 align-middle d-flex align-items-center justify-content-between py-4">
                   <button className="btn btn-outline-primary btn-sm rounded-pill"
-                    onClick={(evt) => handleOnClickAddUserInCallAttendance(evt, searchUser.ID)}
+                    onClick={(evt) => handleOnClickOpenModalUserCallAtendance(evt, searchUser.ID)}
                   >
                     Adicionar
                   </button>
@@ -67,14 +68,31 @@ export default function ListUsersCallAttendance({ usersCallAttendance, handleOnC
                     {user.presence ? (<span className="badge bg-success rounded-pill">presente</span>) : (<span className="badge bg-danger rounded-pill">ausente</span>)}
                   </td>
                   <td className="p-0 border-0 align-middle d-flex align-items-center justify-content-between py-4">
-                    <button className="btn btn-outline-primary btn-sm rounded-pill"
-                      onClick={(evt) => handleOnClickAddUserInCallAttendance(evt, user.ID)}
-                    >
-                      Adicionar
-                    </button>
-                    <span onClick={(evt: any) => handleOnClickOpenModal(evt, user.ID)}>
-                      <i className="fas fa-eye " style={{ paddingLeft: '4px' }} />
-                    </span>
+                    {
+                      user.presence ?
+                        (
+                          <div style={{ marginTop: '5px' }}>
+
+                            <span onClick={(evt: any) => handleOnClickOpenModal(evt, user.ID)}>
+                              <i className="fas fa-eye " style={{ paddingLeft: '4px' }} />
+                            </span>
+                          </div>
+                        )
+                        :
+                        (
+                          <div className="" style={{ marginTop: '5px'}}>
+                            <button className="btn btn-outline-primary btn-sm rounded-pill"
+                              onClick={(evt) => handleOnClickOpenModalUserCallAtendance(evt, user.ID)}
+                            >
+                              Adicionar
+                            </button>
+                            <span onClick={(evt: any) => handleOnClickOpenModal(evt, user.ID)}>
+                              <i className="fas fa-eye " style={{ paddingLeft: '4px' }} />
+                            </span>
+                          </div>
+
+                        )
+                    }
                   </td>
                 </tr>
               ))

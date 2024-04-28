@@ -105,7 +105,7 @@ class CallAttendanceController {
             email
             voiceType
             memberCard
-            userNumberVoice
+            badgeNumber
             churchName
             areaNumber
             isActive
