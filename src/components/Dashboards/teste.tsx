@@ -33,7 +33,7 @@ export default function ExemploGrafico() {
   return (
     <ApexChart
       options={chartOptions}
-      series={[{ name: 'teste dashboard', data: seriesChatBotEventFeedbackByDateIntervalChart }]}
+      series={[{ name: 'teste Analytics', data: seriesChatBotEventFeedbackByDateIntervalChart }]}
       height={DEFAULT_CHART_HEIGHT}
       type={'bar'}
     />

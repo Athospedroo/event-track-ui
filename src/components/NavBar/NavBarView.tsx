@@ -8,8 +8,8 @@ export function NavBarView() {
   function handleRedirectEvents() {
     Router.push('/Event/EventView')
   }
-  function handleRedirectDashboard() {
-    Router.push('/Dashboard')
+  function handleRedirectAnalytics() {
+    Router.push('/Analytics')
   }
   function handleRedirectUsers() {
     Router.push('/Users')
@@ -32,7 +32,7 @@ export function NavBarView() {
                 <a className="nav-link" aria-current="page" href="#">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#" onClick={handleRedirectDashboard}>Analytics</a>
+                <a className="nav-link" href="#" onClick={handleRedirectAnalytics}>Analytics</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#" onClick={handleRedirectEvents}>Eventos</a>
@@ -72,7 +72,7 @@ export function NavBarView() {
   //         />
   //       </Navbar.Brand>
   //       <Nav classNameName="me-auto mb-2 mb-lg-0">
-  //         <Nav.Link href="#"onClick={handleRedirectDashboard}>Dashboards</Nav.Link>
+  //         <Nav.Link href="#"onClick={handleRedirectAnalytics}>Analytics</Nav.Link>
   //         <Nav.Link href="#" onClick={handleRedirectEvents}><>Eventos</></Nav.Link>
   //         <Nav.Link href="#" onClick={handleRedirectUsers}>Componentes</Nav.Link>
   //       </Nav>

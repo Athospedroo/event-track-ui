@@ -63,7 +63,7 @@ export default function EventView() {
 
   function handleOnClickBack() {
     router.push({
-      pathname: '/Dashboard'
+      pathname: '/Analytics'
     })
   }
   function handleOnClickCreate() {

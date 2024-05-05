@@ -1,86 +1,25 @@
-// import PresentsPerArea from "@/components/Dashboards/PresentsPerArea"
-// import UsersPerArea from "@/components/Dashboards/UsersPerArea"
+// import PresentsPerArea from "@/components/Analytics/PresentsPerArea"
+// import UsersPerArea from "@/components/Analytics/UsersPerArea"
 
 import ExemploGrafico from "@/components/Dashboards/teste"
 import { UserCallAttendancetype } from "@/lib/callAttendance/callAttendanceType"
 import { useEffect, useState } from "react"
+import analyticsController from "../../lib/analytics/analyticsController"
+import { NotificationAction } from "@/components/Notification/Notification"
 
-export default function Dashboard() {
+export default function Analytics() {
   const [presents, setPresents] = useState<number>()
   const [absents, setAbsents] = useState<number>()
   const [exit, setExists] = useState<number>()
   const [usersCallAttendances, setUsersCallAttendances] = useState<any[]>([])
   const [usersCallAttendances2, setUsersCallAttendances2] = useState<any[]>([])
-  const usersCallAttendances1: any[] = [{
-    ID: "1",
-    name: "João",
-    email: "joao@example.com",
-    voiceType: 1,
-    memberCard: "1234",
-    badgeNumber: 1001,
-    churchName: "Igreja A",
-    areaNumber: "A1",
-    isActive: 1,
-    isDeleted: 0,
-    presence: true,
-    badgeChecked: 1
-  },
-  {
-    ID: "2",
-    name: "Maria",
-    email: "maria@example.com",
-    voiceType: 2,
-    memberCard: "5678",
-    badgeNumber: 1002,
-    churchName: "Igreja B",
-    areaNumber: "B2",
-    isActive: 1,
-    isDeleted: 0,
-    presence: false,
-    badgeChecked: null
-  },
-  {
-    ID: "3",
-    name: "Pedro",
-    email: null,
-    voiceType: 1,
-    memberCard: "9876",
-    badgeNumber: 1003,
-    churchName: null,
-    areaNumber: null,
-    isActive: 0,
-    isDeleted: 1,
-    presence: true,
-    badgeChecked: 1
-  },
-  {
-    ID: "4",
-    name: "Ana",
-    email: "ana@example.com",
-    voiceType: 2,
-    memberCard: "4321",
-    badgeNumber: 1004,
-    churchName: "Igreja C",
-    areaNumber: "C3",
-    isActive: 1,
-    isDeleted: 0,
-    presence: true,
-    badgeChecked: 1
-  },
-  {
-    ID: "5",
-    name: "Carlos",
-    email: "carlos@example.com",
-    voiceType: 1,
-    memberCard: "2468",
-    badgeNumber: 1005,
-    churchName: "Igreja D",
-    areaNumber: "D4",
-    isActive: 1,
-    isDeleted: 0,
-    presence: false,
-    badgeChecked: null
-  }]
+  const [countSopranosPresent, setCountSopranosPresent] = useState<number>(0)
+  const [countSopranosAbsent, setCountSopranosAbsent] = useState<number>(0)
+  const [countContraltosPresent, setCountContraltosPresent] = useState<number>(0)
+  const [countContraltosAbsent, setCountContraltosAbsent] = useState<number>(0)
+  // const [ ]
+
+
 
   const usersData: any[] = [
     {
@@ -146,9 +85,46 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
-    setUsersCallAttendances(usersCallAttendances1)
     setUsersCallAttendances2(usersData)
+    init()
   }, [])
+
+  async function init() {
+    await initSopranos()
+    await initContraltos()
+    await listUsersByvoiceType()
+  }
+
+  async function initSopranos() {
+    const { analytics, errors } = await analyticsController.eventTrackAnalytics(2)
+    const { usersPresent, usersAbsent } = analytics
+
+    if (errors) {
+      NotificationAction.notifyAllErrors(errors)
+    }
+
+    setCountSopranosAbsent(usersAbsent)
+    setCountSopranosPresent(usersPresent)
+  }
+
+  async function initContraltos() {
+    const { analytics, errors } = await analyticsController.eventTrackAnalytics(4)
+    const { usersPresent, usersAbsent } = analytics
+
+    if (errors) {
+      NotificationAction.notifyAllErrors(errors)
+    }
+
+    setCountContraltosAbsent(usersAbsent)
+    setCountContraltosPresent(usersPresent)
+  }
+
+  async function listUsersByvoiceType(voiceType: number = 2){
+    const { analytics, errors } = await analyticsController.eventTrackAnalytics(voiceType)
+    const { recentsUsers} = analytics
+
+    setUsersCallAttendances(recentsUsers)
+  }
   function handleBadgeClick(s: string) {
 
   }
@@ -168,7 +144,7 @@ export default function Dashboard() {
           </ul>
         </div>
         <div className="col">
-          <div className="container-badge">
+          <div className="d-flex justify-content-flex-end">
             <span className="badge bg-success fs-sm px-4">Presentes</span>
             <span className="badge bg-warning fs-sm px-4">Ausentes</span>
             <span className="badge bg-info fs-sm px-4">Saida</span>
@@ -182,9 +158,8 @@ export default function Dashboard() {
             <p className='m-0 fw-bold text-black-50 col'>SOPRANOS</p>
             <div className="d-flex justify-content-between">
               <div className='text-black fs-card-metric-card-time'>
-                {
-                  <span className="col m-0">--:--</span>
-                }
+                <span className="col m-0 fw-bold">Presentes: {countSopranosPresent}</span><br />
+                <span className="col m-0 fw-bold">Ausentes: {countSopranosAbsent}</span>
               </div>
               <div>
                 {/* <TooltipDefault content={<RealTimeAttendanceDescriptionTooltipComponent description='Tempo total de espera por atendimento, dividido pela quantidade de ligações concluídas.' />} >
@@ -218,9 +193,8 @@ export default function Dashboard() {
             <p className='m-0 fw-bold text-black-50 col'>CONTRALTOS</p>
             <div className="d-flex justify-content-between">
               <div className='text-black fs-card-metric-card-time'>
-                {
-                  <span className="col m-0">--:--</span>
-                }
+              <span className="col m-0 fw-bold">Presentes: {countContraltosPresent}</span><br />
+                <span className="col m-0 fw-bold">Ausentes: {countContraltosAbsent}</span>
               </div>
               <div>
                 {/* <TooltipDefault content={<RealTimeAttendanceDescriptionTooltipComponent description='Tempo total de espera por atendimento, dividido pela quantidade de ligações concluídas.' />} >
@@ -273,6 +247,12 @@ export default function Dashboard() {
                 data-bs-parent="#accordion1"
               >
                 <div className="accordion-body">
+                  <div className="d-flex py-4">
+                    <button onClick={() => listUsersByvoiceType(2)} style={{ background: '#9370DB', color: '#000' }} className="badge border-0 rounded-pill badge-small mx-1">Sopranos</button>
+                    <button onClick={() => handleBadgeClick('tenor')} style={{ background: '#99ccff', color: '#000' }} className="badge border-0 rounded-pill badge-small mx-1">Tenor</button>
+                    <button onClick={() => listUsersByvoiceType(4)} style={{ background: '#ffb3b3', color: '#000' }} className="badge border-0 rounded-pill badge-small mx-1">Contralto</button>
+                    <button onClick={() => handleBadgeClick('baixos')} style={{ background: '#ffff99', color: '#000' }} className="badge border-0 rounded-pill badge-small mx-1">Baixos</button>
+                  </div>
                   <div className="table-responsive table-hover overflow-purple-y">
                     <table className="table">
                       <thead>
@@ -321,27 +301,36 @@ export default function Dashboard() {
                 aria-labelledby="headingTwo2"
                 data-bs-parent="#accordion2"
               >
-                <div className="table-responsive table-hover overflow-purple-y">
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th className="border-0 py-2 rounded-pill rounded-end-0 text-body-secondary ps-4" style={{ width: '30%', background: '#D0D9D4' }}>Nome</th>
-                        <th className="border-0 text-body-secondary text-start" style={{ width: '20%', background: '#D0D9D4' }}>Número</th>
-                        <th className="border-0 text-body-secondary text-start" style={{ width: '20%', background: '#D0D9D4' }}>Igreja</th>
-                        <th className="border-0 py-2 rounded-pill rounded-start-0 text-body-secondary text-start" style={{ width: '30%', background: '#D0D9D4' }}>CT Membro</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {usersData?.map((user: UserCallAttendancetype) => (
-                        <tr key={user.ID}>
-                          <td className="p-3 ps-4 align-middle">{user.name}</td>
-                          <td className="align-middle">{user.badgeNumber}</td>
-                          <td className="text-start align-middle">{user.churchName}</td>
-                          <td className="text-start align-middle">{user.memberCard}</td>
+                <div className="accordion-body">
+                  <div className="d-flex py-4">
+                    <button onClick={() => handleBadgeClick('sopranos')} style={{ background: '#9370DB', color: '#663300' }} className="badge border-0 rounded-pill badge-small mx-1">Sopranos</button>
+                    <button onClick={() => handleBadgeClick('tenor')} style={{ background: '#99ccff', color: '#003366' }} className="badge border-0 rounded-pill badge-small mx-1">Tenor</button>
+                    <button onClick={() => handleBadgeClick('contralto')} style={{ background: '#ffb3b3', color: '#660000' }} className="badge border-0 rounded-pill badge-small mx-1">Contralto</button>
+                    <button onClick={() => handleBadgeClick('baixos')} style={{ background: '#ffff99', color: '#666600' }} className="badge border-0 rounded-pill badge-small mx-1">Baixos</button>
+                  </div>
+                  <div className="table-responsive table-hover overflow-purple-y">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th className="border-0 py-2 rounded-pill rounded-end-0 text-body-secondary ps-4" style={{ width: '30%', background: '#D0D9D4' }}>Nome</th>
+                          <th className="border-0 text-body-secondary text-start" style={{ width: '20%', background: '#D0D9D4' }}>Número</th>
+                          <th className="border-0 text-body-secondary text-start" style={{ width: '20%', background: '#D0D9D4' }}>Igreja</th>
+                          <th className="border-0 py-2 rounded-pill rounded-start-0 text-body-secondary text-start" style={{ width: '30%', background: '#D0D9D4' }}>CT Membro</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {usersData?.map((user: UserCallAttendancetype) => (
+                          <tr key={user.ID}>
+                            <td className="p-3 ps-4 align-middle">{user.name}</td>
+                            <td className="align-middle">{user.badgeNumber}</td>
+                            <td className="text-start align-middle">{user.churchName}</td>
+                            <td className="text-start align-middle">{user.memberCard}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
                 </div>
               </div>
             </div>
