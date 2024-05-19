@@ -36,7 +36,7 @@ class AnalyticsController {
     const errors = response.getErrors()
 
     return {
-      analytics: payload.eventTrackAnalytics,
+      analytics: payload?.eventTrackAnalytics,
       errors: errors
     }
   }

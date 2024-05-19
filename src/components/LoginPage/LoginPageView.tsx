@@ -25,7 +25,7 @@ export function LoginPageView() {
       },
       {
         userID: "964f68c9-fc74-4ac5-8e13-12e878a35965",
-        name: "Ester Victória",
+        name: "Esterzinha galerosaaa!",
         email: "estervictoria@gmail.com",
         password: "estvic@2024",
       }

@@ -55,6 +55,7 @@ export default function UserCallAttendanceViewModal(props: UserCallAttendanceVie
     const values = { ID, badgeChecked }
     props.handleAddRegisterInCallAttendance(values)
     closeModal(null)
+    handleOnClickCloseModal()
   }
 
   function handleOnClickCloseModal() {

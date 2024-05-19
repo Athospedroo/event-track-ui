@@ -65,7 +65,6 @@ export default function CallAttendanceView() {
   async function handleOnClickOpenModalUserCallAtendance(e: React.MouseEvent<HTMLButtonElement>, userID: string) {
     e.preventDefault()
     const response = await callAttendanceController.getUser(userID)
-    console.log('aloalaoaoalao', response.user)
     CallAttendanceViewEvent.openUserCallAttendanceViewModal(eventLocal, response?.user)
   }
 
@@ -88,6 +87,7 @@ export default function CallAttendanceView() {
     } else {
       CallAttendanceViewEvent.closeUserDetailsAndRecordsModalView(eventLocal, null)
       // setMessageSuccess('Presença adicionada com sucesso!')
+      
       NotificationAction.notifySuccess(`Presença adicionada com sucesso!`)
       await fetchUsersCallAttendance(voiceType as number, eventID as number)
     }

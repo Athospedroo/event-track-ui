@@ -36,6 +36,7 @@ type UserCallAttendancetype = {
   isDeleted: number,
   presence: boolean,
   badgeChecked: number | null
+  userType: number | null
 }
 
 type listUserCallAttendanceRequestType = {

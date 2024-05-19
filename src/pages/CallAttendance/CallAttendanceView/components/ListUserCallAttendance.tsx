@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { UserCallAttendancetype } from "../../../../lib/callAttendance/callAttendanceType"
 
 interface ListUserCallAttendanceProps {
@@ -58,7 +59,17 @@ export default function ListUsersCallAttendance({ usersCallAttendance, handleOnC
 
               usersCallAttendance?.map((user: UserCallAttendancetype) => (
                 <tr key={user.ID}>
-                  <td className="p-3 ps-4 align-middle">{user.name}</td>
+                  {
+                    user.userType === 2 ? (
+                      <>
+                        <td className="p-3 ps-4 align-middle"> <span className="badge  bg-warning text-dark">{user.name}</span></td>
+
+                      </>
+                    ) : (<>
+                      <td className="p-3 ps-4 align-middle">{user.name}</td>
+
+                    </>)
+                  }
 
                   <td className="align-middle">
                     {/* <CheckmarkAndCross indicator={tag.isActive} /> */}
@@ -80,9 +91,9 @@ export default function ListUsersCallAttendance({ usersCallAttendance, handleOnC
                         )
                         :
                         (
-                          <div className="" style={{ marginTop: '5px'}}>
+                          <div className="" style={{ marginTop: '5px' }}>
                             <button className="btn btn-outline-primary btn-sm rounded-pill"
-                              onClick={(evt) => handleOnClickOpenModalUserCallAtendance(evt, user.ID)}
+                              onClick={(evt) => handleOnClickAddUserInCallAttendance(evt, user.ID)}
                             >
                               Adicionar
                             </button>

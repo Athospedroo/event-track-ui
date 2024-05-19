@@ -13,10 +13,10 @@ export default function Analytics() {
   const [exit, setExists] = useState<number>()
   const [usersCallAttendances, setUsersCallAttendances] = useState<any[]>([])
   const [usersCallAttendances2, setUsersCallAttendances2] = useState<any[]>([])
-  const [countSopranosPresent, setCountSopranosPresent] = useState<number>(0)
-  const [countSopranosAbsent, setCountSopranosAbsent] = useState<number>(0)
-  const [countContraltosPresent, setCountContraltosPresent] = useState<number>(0)
-  const [countContraltosAbsent, setCountContraltosAbsent] = useState<number>(0)
+  const [countSopranosPresent, setCountSopranosPresent] = useState<number | null>(0)
+  const [countSopranosAbsent, setCountSopranosAbsent] = useState<number | null>(0)
+  const [countContraltosPresent, setCountContraltosPresent] = useState<number | null>(0)
+  const [countContraltosAbsent, setCountContraltosAbsent] = useState<number | null>(0)
   // const [ ]
 
 
@@ -97,33 +97,47 @@ export default function Analytics() {
 
   async function initSopranos() {
     const { analytics, errors } = await analyticsController.eventTrackAnalytics(2)
-    const { usersPresent, usersAbsent } = analytics
 
     if (errors) {
       NotificationAction.notifyAllErrors(errors)
     }
 
-    setCountSopranosAbsent(usersAbsent)
-    setCountSopranosPresent(usersPresent)
+    if (analytics) {
+      const { usersPresent, usersAbsent } = analytics
+
+
+      // if ( usersAbsent)
+      setCountSopranosAbsent(usersAbsent)
+      setCountSopranosPresent(usersPresent)
+
+    }
   }
 
   async function initContraltos() {
     const { analytics, errors } = await analyticsController.eventTrackAnalytics(4)
-    const { usersPresent, usersAbsent } = analytics
 
     if (errors) {
       NotificationAction.notifyAllErrors(errors)
     }
 
-    setCountContraltosAbsent(usersAbsent)
-    setCountContraltosPresent(usersPresent)
+    if (analytics) {
+      const { usersPresent, usersAbsent } = analytics
+      setCountContraltosAbsent(usersAbsent)
+      setCountContraltosPresent(usersPresent)
+    }
   }
 
-  async function listUsersByvoiceType(voiceType: number = 2){
+  async function listUsersByvoiceType(voiceType: number = 2) {
     const { analytics, errors } = await analyticsController.eventTrackAnalytics(voiceType)
-    const { recentsUsers} = analytics
+    if (errors) {
+      NotificationAction.notifyAllErrors(errors)
+    }
 
-    setUsersCallAttendances(recentsUsers)
+    if (analytics) {
+      const { recentsUsers } = analytics
+
+      setUsersCallAttendances(recentsUsers)
+    }
   }
   function handleBadgeClick(s: string) {
 
@@ -193,7 +207,7 @@ export default function Analytics() {
             <p className='m-0 fw-bold text-black-50 col'>CONTRALTOS</p>
             <div className="d-flex justify-content-between">
               <div className='text-black fs-card-metric-card-time'>
-              <span className="col m-0 fw-bold">Presentes: {countContraltosPresent}</span><br />
+                <span className="col m-0 fw-bold">Presentes: {countContraltosPresent}</span><br />
                 <span className="col m-0 fw-bold">Ausentes: {countContraltosAbsent}</span>
               </div>
               <div>
