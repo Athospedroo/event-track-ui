@@ -13,6 +13,7 @@ import ListUsersCallAttendance from "./components/ListUserCallAttendance"
 import UserDetailsAndRecordsViewModal from "./components/UserDetailsAndRecordsViewModal"
 import UserCallAttendanceViewModal from "./components/UserCallAttendanceViewModal"
 import { NotificationAction } from "@/components/Notification/Notification"
+import { View } from "@/components/View/View"
 
 export default function CallAttendanceView() {
   const [eventLocal] = useState(new EventEmitterLocal())
@@ -87,7 +88,7 @@ export default function CallAttendanceView() {
     } else {
       CallAttendanceViewEvent.closeUserDetailsAndRecordsModalView(eventLocal, null)
       // setMessageSuccess('Presença adicionada com sucesso!')
-      
+
       NotificationAction.notifySuccess(`Presença adicionada com sucesso!`)
       await fetchUsersCallAttendance(voiceType as number, eventID as number)
     }
@@ -139,94 +140,96 @@ export default function CallAttendanceView() {
   function obterDataEmPortugues() {
     const diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
     const mesesDoAno = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-  
+
     const dataAtual = new Date();
     const diaSemana = diasDaSemana[dataAtual.getDay()];
     const dia = dataAtual.getDate();
     const mes = mesesDoAno[dataAtual.getMonth()];
     const ano = dataAtual.getFullYear();
-  
+
     const dataFormatada = `${diaSemana}, ${dia} de ${mes} de ${ano}`;
-  
+
     return dataFormatada;
   }
 
   return (
-    <div className="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
-      <section>
-        <div className="row align-items-center">
-          <div className="col">
-            <h4 className="h4">{voiceTypeToString(voiceType as number)}</h4>
-            <div className="d-flex mt-3">
-              <span className="date">{obterDataEmPortugues()}</span>
+    <View>
+      <div className="container py-5 mt-4 mt-lg-5 mb-lg-4 my-xl-5">
+        <section>
+          <div className="row align-items-center">
+            <div className="col">
+              <h4 className="h4">{voiceTypeToString(voiceType as number)}</h4>
+              <div className="d-flex mt-3">
+                <span className="date">{obterDataEmPortugues()}</span>
 
+              </div>
             </div>
-          </div>
-          {/* <div className="col-auto justify-content-end me-3 pe-0">
+            {/* <div className="col-auto justify-content-end me-3 pe-0">
 
             <span>Total</span>
             <span className="ms-1 badge rounded-pill bg-secondary">{`288 -> mocado`}</span>
 
           </div> */}
-          <div className="col-auto justify-content-end me-3 pe-0">
-            <button
-              className="btn p-1 mb-2 pt-2"
-              onClick={handleOnClickBack}
-            >
-              <i className="fas fa-long-arrow-alt-left" />
-              <span>Voltar</span>
-            </button>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              <div className="d-flex mt-3">
-                <div className="input-group mb-3 py-1">
-                  <input type="text"
-                    className="form-control rounded-pill py-2"
-                    placeholder="Digite o número do crachá :)"
-                    aria-label="Digite o número do crachá :)"
-                    aria-describedby="button-addon2"
-                    value={searchUserNumber ? searchUserNumber : ''}
-                    onChange={handleSearchUser}
-                  />
-                  {/* <i className="fas fa-search"></i> */}
-                  {/* <div className="input-group-append ps-2">
+            <div className="col-auto justify-content-end me-3 pe-0">
+              <button
+                className="btn p-1 mb-2 pt-2"
+                onClick={handleOnClickBack}
+              >
+                <i className="fas fa-long-arrow-alt-left" />
+                <span>Voltar</span>
+              </button>
+            </div>
+            <div className="row">
+              <div className="col-12">
+                <div className="d-flex mt-3">
+                  <div className="input-group mb-3 py-1">
+                    <input type="text"
+                      className="form-control rounded-pill py-2"
+                      placeholder="Digite o número do crachá :)"
+                      aria-label="Digite o número do crachá :)"
+                      aria-describedby="button-addon2"
+                      value={searchUserNumber ? searchUserNumber : ''}
+                      onChange={handleSearchUser}
+                    />
+                    {/* <i className="fas fa-search"></i> */}
+                    {/* <div className="input-group-append ps-2">
                     <button className="btn btn-outline-secondary rounded-pill bts-sm" type="button" id="button-addon2">buscar</button>
                   </div> */}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="row mt-1 mt-md-1">
-          <div className="col mb-2">
-            <ListUsersCallAttendance
-              handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
-              handleOnClickOpenModal={handleOnClickOpenModal}
-              handleOnClickOpenModalUserCallAtendance={handleOnClickOpenModalUserCallAtendance}
-              usersCallAttendance={usersCallAttendance}
-              searchUser={searchUser}
-              cleanInputSearch={cleanInputSearchUser}
-            />
+          <div className="row mt-1 mt-md-1">
+            <div className="col mb-2">
+              <ListUsersCallAttendance
+                handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
+                handleOnClickOpenModal={handleOnClickOpenModal}
+                handleOnClickOpenModalUserCallAtendance={handleOnClickOpenModalUserCallAtendance}
+                usersCallAttendance={usersCallAttendance}
+                searchUser={searchUser}
+                cleanInputSearch={cleanInputSearchUser}
+              />
+            </div>
           </div>
-        </div>
-        <div className="row align-items-center ">
-          <div className="col d-flex align-self-center justify-content-center">
-            <button className="btn btn-outline-primary  rounded-pill" onClick={handleConcludeEvent}>
-              Concluir Evento
-            </button>
+          <div className="row align-items-center ">
+            <div className="col d-flex align-self-center justify-content-center">
+              <button className="btn btn-outline-primary  rounded-pill" onClick={handleConcludeEvent}>
+                Concluir Evento
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
-      <UserDetailsAndRecordsViewModal
-        eventLocal={eventLocal}
-        handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
-      />
-      <UserCallAttendanceViewModal
-        eventLocal={eventLocal}
-        handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
-      />
-    </div>
+        </section>
+        <UserDetailsAndRecordsViewModal
+          eventLocal={eventLocal}
+          handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
+        />
+        <UserCallAttendanceViewModal
+          eventLocal={eventLocal}
+          handleAddRegisterInCallAttendance={handleAddRegisterInCallAttendance}
+        />
+      </div>
+    </View>
   )
 }

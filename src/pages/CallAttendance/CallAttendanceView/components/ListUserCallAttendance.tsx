@@ -46,7 +46,7 @@ export default function ListUsersCallAttendance({ usersCallAttendance, handleOnC
                 </td>
                 <td className="p-0 border-0 align-middle d-flex align-items-center justify-content-between py-4">
                   <button className="btn btn-outline-primary btn-sm rounded-pill"
-                    onClick={(evt) => handleOnClickOpenModalUserCallAtendance(evt, searchUser.ID)}
+                    onClick={(evt) => handleOnClickAddUserInCallAttendance(evt, searchUser.ID)}
                   >
                     Adicionar
                   </button>

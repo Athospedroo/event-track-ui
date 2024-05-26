@@ -1,6 +1,6 @@
 import { Error } from "../errorType"
 
-const DELAY = 3000
+const DELAY = 4000
 
 class NotificationAction {
   private static getBootstrap() {

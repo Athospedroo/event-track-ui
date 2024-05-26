@@ -99,7 +99,8 @@ export default function Analytics() {
     const { analytics, errors } = await analyticsController.eventTrackAnalytics(2)
 
     if (errors) {
-      NotificationAction.notifyAllErrors(errors)
+      console.log(errors)
+      // NotificationAction.notifyAllErrors(errors)
     }
 
     if (analytics) {
@@ -117,7 +118,9 @@ export default function Analytics() {
     const { analytics, errors } = await analyticsController.eventTrackAnalytics(4)
 
     if (errors) {
-      NotificationAction.notifyAllErrors(errors)
+      console.log(errors)
+
+      // NotificationAction.notifyAllErrors(errors)
     }
 
     if (analytics) {
@@ -130,7 +133,9 @@ export default function Analytics() {
   async function listUsersByvoiceType(voiceType: number = 2) {
     const { analytics, errors } = await analyticsController.eventTrackAnalytics(voiceType)
     if (errors) {
-      NotificationAction.notifyAllErrors(errors)
+      console.log(errors)
+
+      // NotificationAction.notifyAllErrors(errors)
     }
 
     if (analytics) {
